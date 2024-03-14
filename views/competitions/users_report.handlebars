@@ -1,0 +1,27 @@
+<div class="overflow-x-auto">
+  <table class="table">
+    <!-- head -->
+    <thead>
+      <tr>
+        <th>ID</th>
+                    <th>User</th>
+                    <th>Competition</th>
+                    <th>Current Score</th>
+      </tr>
+    </thead>
+    <tbody>
+         {{#each result.items}}
+                <tr>
+                    <th>{{this.login_id}}</th>
+                    <td>{{this.Competitor}}</td>
+                    <td>{{this.CompName}}</td>
+                    <td>{{this.score}}</td>
+                    <td x-data="{}">
+                        <span x-text="new Date('{{this.apply_till}}').toLocaleString()"></span>
+                    </td>
+                    <td>
+                            <a href="/competitions" class="btn btn-warning btn-primary">Povratak</a>
+                    </td>
+                </tr>
+                {{/each}}
+    </tbody>
