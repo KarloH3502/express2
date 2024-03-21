@@ -212,16 +212,18 @@ router.post("/score_change", authRequired, function (req, res, next) {
 
 // ZADATAK 3
 
-router.get("/users_report/:id", adminRequired, function (req, res, next) {
+router.get("/users_report/:id", function (req, res, next) {
 
     const stmt = db.prepare(`
-        SELECT c.name AS CompName, u.name AS Competitor, l.id AS login_id, l.id_user, l.score
+        SELECT c.name AS CompName, u.name AS Competitor, l.id AS login_id, l.id_user, l.score, l.date_applied
         FROM competitions c, users u, login l
-        WHERE l.id_user = u.id AND l.id_competition = c.id AND l.id_competition = ?;
+        WHERE l.id_user = u.id AND l.id_competition = c.id AND l.id_competition = ?
+        ORDER BY l.score DESC;
     `);
 
     const result = stmt.all(req.params.id);
 
     res.render("competitions/users_report", { result: { items: result } });
 });
+
 module.exports = router;
